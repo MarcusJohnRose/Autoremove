@@ -6,8 +6,9 @@
     "verify_cert": false,
     "categories": {
       "Test": {
-        "max_age_hours": 10
+        "max_age_hours": 10,
+        "min_ratio":0
       }
-    }
+  }
   }
   

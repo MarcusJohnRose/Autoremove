@@ -2,3 +2,4 @@
 .venv/
 
 torrents.db
+config.json

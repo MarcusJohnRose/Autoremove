@@ -24,13 +24,26 @@ db = TorrentDatabase(db_file='torrents.db')
 for category in config['categories']:
     torrents = qb_client.get_torrents_by_category(category)
     age_limit_hours = config['categories'][category]['max_age_hours']
+    min_ratio = config['categories'][category]['min_ratio']
     for torrent in torrents:
+        ageMet = False
+        ratioMet = False
         print(torrent)
         now = datetime.datetime.now()
         added_on = datetime.datetime.fromtimestamp(torrent.added_on)
         age_in_hours = (now - added_on).total_seconds() / 3600
+        
+        #Check age vs age limit
         if age_in_hours > age_limit_hours:
-            # Delete torrent and save information to database
+            ageMet = True 
+        
+        #Check ratio vs ratio limit
+        ratio=torrent.ratio
+        if ratio > min_ratio:
+            ratioMet = True
+        
+        # Delete torrent and save information to database
+        if ratioMet and ageMet:
             db.insert_torrent(
                 name=torrent.name,
                 size=torrent.size,
