@@ -44,14 +44,14 @@ for category in config['categories']:
         
         # Delete torrent and save information to database
         if ratioMet and ageMet:
-            db.insert_torrent(
-                name=torrent.name,
-                size=torrent.size,
-                ratio=torrent.ratio,
-                added=added_on,
-                removed_on=now,
-                age_when_removed=age_in_hours,
-                tracker=torrent.tracker,
-                category=category
-            )
-            qb_client.delete_torrent(torrent.hash)
+            name=torrent.name,
+            size=torrent.size,
+            ratio=torrent.ratio,
+            added=added_on,
+            removed_on=now,
+            age_when_removed=age_in_hours,
+            tracker=torrent.tracker,
+            category=category
+            qb_client.delete_torrent(True,torrent.hash)
+            db.insert_torrent(name,size,ratio,added,removed_on,age_when_removed,tracker,category)
+            
