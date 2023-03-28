@@ -4,6 +4,7 @@
     "username": "username",
     "password": "password",
     "verify_cert": false,
+    "deleteFiles":true,
     "categories": {
       "Test": {
         "max_age_hours": 10,

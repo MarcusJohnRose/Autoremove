@@ -52,6 +52,6 @@ for category in config['categories']:
             age_when_removed=age_in_hours,
             tracker=torrent.tracker,
             category=category
-            qb_client.delete_torrent(True,torrent.hash)
+            qb_client.delete_torrent(config["deleteFiles"],torrent.hash)
             db.insert_torrent(name,size,ratio,added,removed_on,age_when_removed,tracker,category)
             
