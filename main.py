@@ -2,9 +2,13 @@ from client import QBTorrentClient
 from database import TorrentDatabase
 import datetime
 import json
+import os
 
+absolute_path = os.path.dirname(__file__)
+
+config_file  = "config.json"
 # Load config from json file
-with open('config.json') as f:
+with open(os.path.join(absolute_path,config_file)) as f:
     config = json.load(f)
 
 # Initialize qBittorrent client
@@ -28,7 +32,6 @@ for category in config['categories']:
     for torrent in torrents:
         ageMet = False
         ratioMet = False
-        print(torrent)
         now = datetime.datetime.now()
         added_on = datetime.datetime.fromtimestamp(torrent.added_on)
         age_in_hours = (now - added_on).total_seconds() / 3600
@@ -44,14 +47,16 @@ for category in config['categories']:
         
         # Delete torrent and save information to database
         if ratioMet and ageMet:
-            name=torrent.name,
-            size=torrent.size,
-            ratio=torrent.ratio,
-            added=added_on,
-            removed_on=now,
-            age_when_removed=age_in_hours,
-            tracker=torrent.tracker,
-            category=category
-            qb_client.delete_torrent(config["deleteFiles"],torrent.hash)
-            db.insert_torrent(name,size,ratio,added,removed_on,age_when_removed,tracker,category)
+            torrentName=torrent.name
+            torrentSize=torrent.size
+            torrentRatio=torrent.ratio
+            torrentAdded=added_on
+            torrentRemoved_on=now
+            torrentAge_when_removed=age_in_hours
+            torrentTracker=torrent.tracker
+            torrentCategory=category
+   
+            qb_client.delete_torrent(True,torrent.hash)
+            
+            db.insert_torrent(name=torrentName,size=torrentSize,ratio=torrentRatio,added=torrentAdded,removed_on=torrentRemoved_on,age_when_removed=torrentAge_when_removed,tracker=torrentTracker,category=torrentCategory)
             

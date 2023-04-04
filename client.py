@@ -20,4 +20,5 @@ class QBTorrentClient:
     def get_torrents_by_category(self, category):
         return self.qb_client.torrents_info(category=category)
     
-yield        return self.qb_client.torrents_delete(delete_files,torrent_hashes=torrent_hash)
+    def delete_torrent(self,delete_files, torrent_hash):
+        return self.qb_client.torrents_delete(delete_files=delete_files,torrent_hashes=torrent_hash)
