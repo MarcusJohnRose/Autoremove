@@ -5,6 +5,18 @@
     "password": "password",
     "verify_cert": false,
     "deleteFiles":true,
+    "trackers" : {
+      "IPT":{
+        "URL":"",
+        "min_ratio": 0,
+        "min_age": 0},
+      "ANT":{
+        "min_ratio": 0,
+        "min_age": 0},
+      "NBL":{
+        "min_ratio": 0,
+        "min_age": 0}
+    },
     "categories": {
       "Test": {
         "max_age_hours": 10,
