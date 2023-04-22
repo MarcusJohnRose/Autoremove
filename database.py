@@ -10,19 +10,19 @@ class TorrentDatabase:
         conn = sqlite3.connect(self.db_file)
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS torrents 
-                     (name text, size real, ratio real, added_date text, removed_date text, age_at_removal real, tracker text,category text)''')
+                     (name text, size real, ratio real, added_date text, removed_date text, age_at_removal real,seed_time real tracker text,category text)''')
         conn.commit()
         conn.close()
 
-    def insert_torrent(self, name,size,ratio,added,removed_on,age_when_removed,tracker,category):
+    def insert_torrent(self, name,size,ratio,added,removed_on,age_when_removed,seed_time,tracker,category):
         conn = sqlite3.connect(self.db_file)
         c = conn.cursor()
         now = datetime.datetime.now()
         #age_at_removal = (now - datetime.datetime.fromtimestamp(added)).total_seconds() / 3600.0
         c.execute('''INSERT INTO torrents 
-                     (name, size, ratio, added_date, removed_date, age_at_removal, tracker,category) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?,?)''', 
-                  (name, size, ratio, added,removed_on,age_when_removed, tracker,category))
+                     (name, size, ratio, added_date, removed_date, age_at_removal,seed_time, tracker,category) 
+                     VALUES (?, ?, ?, ?, ?, ?,?, ?,?)''', 
+                  (name, size, ratio, added,removed_on,age_when_removed,seed_time, tracker,category))
         conn.commit()
         conn.close()
 
