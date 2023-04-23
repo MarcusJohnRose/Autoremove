@@ -3,3 +3,7 @@
 
 torrents.db
 config.json
+
+example config.json
+
+__pycache__/
